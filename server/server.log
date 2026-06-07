@@ -1,0 +1,69 @@
+Executing (default): SELECT 1+1 AS result
+Database connected successfully
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'user' AND TABLE_SCHEMA = 'campus_food_review'
+Executing (default): SHOW FULL COLUMNS FROM `user`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'user' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='campus_food_review' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `user` CHANGE `student_no` `student_no` VARCHAR(50) UNIQUE;
+Executing (default): ALTER TABLE `user` CHANGE `nickname` `nickname` VARCHAR(50) NOT NULL;
+Executing (default): ALTER TABLE `user` CHANGE `college` `college` VARCHAR(100);
+Executing (default): ALTER TABLE `user` CHANGE `password` `password` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `user` CHANGE `role` `role` VARCHAR(20) NOT NULL DEFAULT 'student';
+Executing (default): ALTER TABLE `user` CHANGE `status` `status` INTEGER NOT NULL DEFAULT 1;
+Executing (default): ALTER TABLE `user` CHANGE `create_time` `create_time` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `user`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'restaurant' AND TABLE_SCHEMA = 'campus_food_review'
+Executing (default): SHOW FULL COLUMNS FROM `restaurant`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'restaurant' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='campus_food_review' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `restaurant` CHANGE `name` `name` VARCHAR(100) NOT NULL;
+Executing (default): ALTER TABLE `restaurant` CHANGE `address` `address` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `restaurant` CHANGE `type` `type` VARCHAR(50) NOT NULL;
+Executing (default): ALTER TABLE `restaurant` CHANGE `avg_price` `avg_price` DECIMAL(10,2) DEFAULT 0;
+Executing (default): ALTER TABLE `restaurant` CHANGE `menu_info` `menu_info` TEXT;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='restaurant' AND constraint_name = 'restaurant_ibfk_1' AND TABLE_SCHEMA = 'campus_food_review';
+Executing (default): ALTER TABLE `restaurant` DROP FOREIGN KEY `restaurant_ibfk_1`;
+Executing (default): ALTER TABLE `restaurant` ADD FOREIGN KEY (`merchant_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `restaurant` CHANGE `avg_score` `avg_score` DECIMAL(3,2) DEFAULT 0;
+Executing (default): ALTER TABLE `restaurant` CHANGE `review_count` `review_count` INTEGER DEFAULT 0;
+Executing (default): ALTER TABLE `restaurant` CHANGE `status` `status` INTEGER DEFAULT 1;
+Executing (default): ALTER TABLE `restaurant` CHANGE `create_time` `create_time` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `restaurant` CHANGE `update_time` `update_time` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `restaurant`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'review' AND TABLE_SCHEMA = 'campus_food_review'
+Executing (default): SHOW FULL COLUMNS FROM `review`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'review' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='campus_food_review' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='review' AND constraint_name = 'review_ibfk_11' AND TABLE_SCHEMA = 'campus_food_review';
+Executing (default): ALTER TABLE `review` DROP FOREIGN KEY `review_ibfk_11`;
+Executing (default): ALTER TABLE `review` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='review' AND constraint_name = 'review_ibfk_12' AND TABLE_SCHEMA = 'campus_food_review';
+Executing (default): ALTER TABLE `review` DROP FOREIGN KEY `review_ibfk_12`;
+Executing (default): ALTER TABLE `review` ADD FOREIGN KEY (`restaurant_id`) REFERENCES `restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `review` CHANGE `score` `score` INTEGER NOT NULL;
+Executing (default): ALTER TABLE `review` CHANGE `content` `content` TEXT NOT NULL;
+Executing (default): ALTER TABLE `review` CHANGE `status` `status` VARCHAR(20) DEFAULT 'pending';
+Executing (default): ALTER TABLE `review` CHANGE `reply_content` `reply_content` TEXT;
+Executing (default): ALTER TABLE `review` CHANGE `reply_time` `reply_time` DATETIME;
+Executing (default): ALTER TABLE `review` CHANGE `create_time` `create_time` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `review`
+Database synced
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at Function.listen (C:\Users\lqpp\Desktop\食堂点评系统\server\node_modules\express\lib\application.js:635:24)
+    at startServer (C:\Users\lqpp\Desktop\食堂点评系统\server\app.js:31:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+
+Node.js v22.21.0
